@@ -1,13 +1,10 @@
-const styles = StyleSheet.create({
+import { StyleSheet } from 'react-native';
+  const styles=StyleSheet.create({
     containerFila: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
+         flexDirection:'row',justifyContent:'center'
     },
     containerColumna: {
-      flex: 1,
-      flexDirection: 'row'},
+      flex: 1, flexDirection:'column',justifyContent:'center'},
     campoPowderblue:{
       width: 50, 
       height: 50, 
@@ -19,5 +16,14 @@ const styles = StyleSheet.create({
     campoSteelblue:{
       width: 50, 
       height: 50, 
-      backgroundColor: 'steelblue'}
+      backgroundColor: 'steelblue'},
+    descriptionText: {
+        fontSize: 10,
+        fontWeight: 'normal',
+      },
+    titleText: {
+        fontSize: 20,
+        fontWeight: 'bold',
+      },
   });
+  export default styles;

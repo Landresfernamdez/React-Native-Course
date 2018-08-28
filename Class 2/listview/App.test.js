@@ -1,10 +1,9 @@
 import React from 'react';
-import App from './App';
+import FlatListBasics from './App';
 
 import renderer from 'react-test-renderer';
-import FlexDirectionBasics from './App';
 
 it('renders without crashing', () => {
-  const rendered = renderer.create(<FlexDirectionBasics />).toJSON();
+  const rendered = renderer.create(<FlatListBasics />).toJSON();
   expect(rendered).toBeTruthy();
 });
