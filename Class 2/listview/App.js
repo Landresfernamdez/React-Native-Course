@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import Modal from 'react-native-modalbox'
-import { AppRegistry, FlatList, Text, View ,Image,Button} from 'react-native';
+import { AppRegistry,Text, View } from 'react-native';
 import axios from 'axios';
-import  styles from './styles/styles.js';
-export default class FlatListBasics extends Component {
+import Lista from './components/Lista';
+export default class App extends Component {
   constructor(props){
-      super(props);
+    super(props);
       this.arrayholder=[{key:"Andres"}];
       this.state={
         dataSource:this.arrayholder,
@@ -13,10 +12,9 @@ export default class FlatListBasics extends Component {
         imagen:''
       };
   }
-  cargarListaRazas(){
+  cargarListaRazas=()=>{
     axios.get('https://dog.ceo/api/breeds/list')
     .then(response=>{
-      //https://dog.ceo/api/breed/"+ $("#razas").val()+"/images/random
       this.arrayholder=response.data.message;
       var listaCiudades=response.data.message;
       for(var x=0;x<listaCiudades.length;x++){
@@ -24,10 +22,10 @@ export default class FlatListBasics extends Component {
       }
       this.arrayholder=listaCiudades;
       this.setState({
-        dataSource: this.arrayholder
+        dataSource: listaCiudades
       }, function() {
         // In this block you can do something with new state.
-        this.arrayholder = response.data.message;
+        this.arrayholder = listaCiudades;
       })
     }).catch(function (error) {
       return error.data
@@ -46,9 +44,6 @@ export default class FlatListBasics extends Component {
       return error.data
   })
   }
-  componentWillMount(){
-      this.cargarListaRazas();
-  }
   setStateModalImagen(){
     this.setState({
       modalVisible:false
@@ -56,32 +51,15 @@ export default class FlatListBasics extends Component {
   }
   render(){
     return (
-      <View style={styles.container}>
-        <FlatList
-          data={this.state.dataSource}
-          renderItem={({item}) => <Text style={styles.item} onPress={this.GetListViewItem.bind(this, item.key)}>{item.key} </Text>}
-        />
-        <Modal
-            style={styles.modal}
-            position='center'
-            backdrop={true}
-            isOpen={this.state.modalVisible}
-            onClosingState={()=>{
-                  this.setState({
-                      modalVisible:false
-                  })
-                  }}>
-                  <View style={styles.modalImg}>
-                       <Image
-                           source={{ uri: this.state.imagen}}
-                           style={styles.img}
-                        />
-                  </View>
-                  <Button style={styles.botonModal} title="Cerrar" color="black" onPress={this.setStateModalImagen.bind(this)}></Button>
-         </Modal>
-      </View>
+        <Lista  cargarListaRazas={this.cargarListaRazas} 
+        GetListViewItem={this.GetListViewItem} 
+        setStateModalImagen={this.setStateModalImagen}
+        dataSource={this.state.dataSource}
+        imagen={this.state.imagen}
+        modalVisible={this.state.modalVisible}
+        ></Lista>
     );
   }
 }
 // skip this line if using Create React Native App
-AppRegistry.registerComponent('AwesomeProject', () => FlatListBasics);
+AppRegistry.registerComponent('AwesomeProject', () => App);
